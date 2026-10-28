@@ -1,0 +1,149 @@
+DATA DICTIONARY - Price Pulse
+=============================
+
+----------------------------------------------------------------------
+1. CSO - CPM15 (EU HICP for Ireland by commodity group)
+----------------------------------------------------------------------
+Rows x columns : 244,800 x 8
+File size      : 33.9 MB
+Period         : Jan 1996 - Dec 2025
+Base           : 2015 = 100
+
+STATISTIC
+  Type    : text
+  Meaning : Code for the measure
+  Example : CPM15C01
+  Kept?   : No - duplicates "Statistic Label"
+
+Statistic Label
+  Type    : text
+  Meaning : Measure in words (5 types: index, monthly change, annual
+            change, two 12-month averages)
+  Example : EU HICP
+  Kept?   : Yes - used to filter to annual rate of change
+
+TLIST(M1)
+  Type    : integer
+  Meaning : Month as YYYYMM
+  Example : 199601
+  Kept?   : Yes - converted to a date
+
+Month
+  Type    : text
+  Meaning : Month in words
+  Example : 1996 January
+  Kept?   : No - duplicates TLIST(M1)
+
+C01779V04002
+  Type    : text
+  Meaning : COICOP category code ("-" = all items)
+  Example : 01, 011
+  Kept?   : Yes - renamed to coicop_code
+
+Commodity Group
+  Type    : text
+  Meaning : Category name with code in brackets
+  Example : Food (COICOP 01.1)
+  Kept?   : Yes - used as chart labels
+
+UNIT
+  Type    : text
+  Meaning : Unit of the value
+  Example : Base 2015=100
+  Kept?   : No - constant after filtering
+
+VALUE
+  Type    : decimal
+  Meaning : The measured value (20,611 missing)
+  Example : 68.1
+  Kept?   : Yes - the data
+
+----------------------------------------------------------------------
+2. EUROSTAT - prc_hicp_manr (HICP monthly annual rate of change)
+----------------------------------------------------------------------
+Rows x columns : [ADD ROW COUNT] x 10
+File size      : 491.6 MB
+Period         : 1997 - Dec 2025
+Coverage       : 45 geo entities, 467 COICOP categories
+Classification : ECOICOP ver.1
+
+DATAFLOW
+  Type    : text
+  Meaning : Dataset name and version
+  Example : ESTAT:PRC_HICP_MANR(1.0)
+  Kept?   : No - same in every row
+
+LAST UPDATE
+  Type    : text
+  Meaning : Last update by Eurostat
+  Example : 06/02/26 23:00:00
+  Kept?   : No - recorded here instead
+
+freq
+  Type    : text
+  Meaning : Frequency
+  Example : Monthly
+  Kept?   : No - same in every row
+
+unit
+  Type    : text
+  Meaning : Unit of the value
+  Example : Annual rate of change
+  Kept?   : No - same in every row
+
+coicop
+  Type    : text
+  Meaning : Category name (not a code)
+  Example : Administered prices
+  Kept?   : Yes
+
+geo
+  Type    : text
+  Meaning : Country or country group
+  Example : Albania
+  Kept?   : Yes
+
+TIME_PERIOD
+  Type    : text
+  Meaning : Month as YYYY-MM
+  Example : 2019-12
+  Kept?   : Yes - converted to a date
+
+OBS_VALUE
+  Type    : decimal
+  Meaning : % change vs the same month a year earlier
+  Example : 0.1
+  Kept?   : Yes - the data
+
+OBS_FLAG
+  Type    : text
+  Meaning : Note on the value; mostly blank (d = definition differs)
+  Example : d
+  Kept?   : Yes - checked, then dropped
+
+CONF_STATUS
+  Type    : empty
+  Meaning : Confidentiality status; completely empty
+  Example : NaN
+  Kept?   : No - no data
+
+----------------------------------------------------------------------
+3. KEY TERMS
+----------------------------------------------------------------------
+COICOP
+  Standard classification of consumer spending. Codes go from general
+  to specific: 01 Food & drinks -> 011 Food -> 0111 Bread & cereals.
+
+Index (2015 = 100)
+  Price level compared with 2015. 120 = 20% higher than in 2015.
+
+Annual rate of change
+  % change compared with the same month one year earlier.
+
+----------------------------------------------------------------------
+4. DIFFERENCES BETWEEN THE TWO SOURCES
+----------------------------------------------------------------------
+1. Date format : CSO YYYYMM (integer) vs Eurostat YYYY-MM (text)
+2. Categories  : CSO uses codes, Eurostat uses names
+3. Measures    : CSO has 5 statistics, Eurostat has only the annual
+                 rate of change
