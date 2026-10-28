@@ -1,0 +1,96 @@
+27 Oct 2026 – Yasashwi
+What I did: Downloaded both datasets from the official websites.
+Why: Need the full raw data so we can filter and clean it ourselves.
+How:
+- CSO CPM15 from data.cso.ie – full dataset, CSV, Codes = True
+  (5 statistics × 360 months × 136 commodity groups = 244,800 cells)
+- Eurostat prc_hicp_manr from the Eurostat data browser – full dataset,
+  SDMX-CSV 1.0 (45 geo entities, 348 months, 467 COICOP categories)
+Result: CPM15.csv = 33.9 MB; prc_hicp_manr.csv = 491.6 MB
+Problems: Both datasets end Dec 2025 because Eurostat switched to
+COICOP 2018 and base 2025=100 in Jan 2026. We use the 2015-based
+series so both sources match.
+Files: data/raw/CPM15.csv, data/raw/prc_hicp_manr.csv
+Sources used: CSO and Eurostat websites (API link saved in README)
+Report section: 1
+
+28 Oct 2026 – Yasashwi
+What I did: Explored both full datasets and decided the question,
+categories, comparison countries and date range.
+
+Question: Did prices in Ireland rise faster than in the rest of Europe
+during the cost-of-living crisis, and which categories drove it?
+
+Draft headline: Lower Overall, Higher at Home: Irish Prices vs Europe,
+2019–2025 (to be updated once the chart is built)
+
+What I found in the full data:
+- CSO CPM15: 136 categories, incl. 7 special groups (codes ZZZ1–ZZZ7,
+  e.g. ZZZ3 = Energy). Annual rate of change: 48,960 rows; since 2019
+  only 672 of 11,424 values missing.
+- Eurostat prc_hicp_manr: 3,533,048 rows (3.4x Excel's limit of
+  1,048,576). 45 places (33 countries + groups, incl. 3 versions of the
+  euro area). 22,008 missing values. Flags: d = 308,971, u = 17,603,
+  b = 1,561, du = 819, e = 184.
+- Ireland's values match in both sources (e.g. All items peak 9.6%,
+  June 2022), which confirms the two datasets agree.
+
+Decisions and reasons:
+1. Categories: All items, Energy, Food and non-alcoholic beverages,
+   Housing/water/electricity/gas.
+   Why: All items is the baseline. Energy and Housing rose more in
+   Ireland than in the euro area; Food rose less. The mix shows a
+   contrast, not one simple message.
+   Transport dropped: its spike is mostly fuel, already in Energy.
+2. Comparison: Ireland (highlighted) vs euro area 20-country average,
+   with the other 26 EU countries in the background.
+   Why: shows where Ireland ranks among its neighbours, not just vs one
+   average. Ireland's overall peak ranks 24th of 27 EU countries, food
+   26th, but energy and housing 11th.
+   Euro area 20 used because it has fixed members; the other euro area
+   series changes membership over time.
+3. Date range: Jan 2019 – Dec 2025.
+   Why: 2019 = before the crisis, 2022 = peak, 2025 = cool-down. Both
+   datasets end in Dec 2025.
+
+Result: selected subset = 9,408 rows (4 categories x 28 places x 84
+months), 0 missing values, 8 values flagged "u" (unreliable).
+
+Key numbers (peak annual rate, Ireland vs euro area 20):
+- All items: 9.6% vs 10.6%
+- Energy: 54.1% vs 44.1%
+- Housing etc.: 31.8% vs 23.2%
+- Food: 13.2% vs 17.5%
+- All items, Dec 2025: 2.7% vs 2.0%
+
+
+
+28 Oct 2026 – Yasashwi – Cleaning the CSO data
+
+Started with 244,800 rows and 8 columns.
+
+1. Kept only "Annual rate of change" → 48,960 rows
+   Why: Eurostat only has this measure, so both must match.
+
+2. Kept only 4 categories (All items, Food, Housing, Energy) → 1,440 rows
+   Why: these are the categories chosen for the story.
+
+3. Kept only Jan 2019 – Dec 2025 → 336 rows
+   Why: shows before, during and after the price crisis.
+
+4. Removed 4 columns: STATISTIC, Statistic Label, Month, UNIT
+   Why: they had the same value in every row or repeated another column.
+
+5. Renamed columns to: month, coicop_code, category, value
+   Why: the old names were confusing (e.g. C01779V04002).
+
+6. Changed the All-items code from "-" to "00"
+   Why: 00 is the official code; a dash looks like missing data.
+
+7. Changed month from 201901 to a real date (2019-01-01)
+   Why: so the chart orders months correctly and dates match Eurostat.
+
+8. Added short category names and a geo column = Ireland
+   Why: short names fit the chart, and both datasets need the same columns.
+
+Final result: 336 rows, 5 columns, 0 missing values.
