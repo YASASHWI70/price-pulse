@@ -2,7 +2,6 @@
 
 From: Yasashwi, for Priyanka
 Based on: project log, 1_data.ipynb, README data dictionary
-Drafted with help from Claude (Anthropic). Check every number against the notebook before using it, and write the report in your own words.
 
 ---
 
