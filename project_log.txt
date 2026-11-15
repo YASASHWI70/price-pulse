@@ -94,3 +94,56 @@ Started with 244,800 rows and 8 columns.
    Why: short names fit the chart, and both datasets need the same columns.
 
 Final result: 336 rows, 5 columns, 0 missing values.
+
+
+
+14 Nov 2026 – Yasashwi – Cleaning the Eurostat data
+
+Started with 3,533,048 rows (only 5 of 10 columns loaded).
+
+1. Loaded only coicop, geo, TIME_PERIOD, OBS_VALUE, OBS_FLAG
+   Why: the other 5 were the same in every row or empty, and the
+   file is 491.6 MB, so skipping them saves memory.
+
+2. Kept only 4 categories (by name) → 56,353 rows
+   Why: same categories as the CSO data. Eurostat uses names, not codes.
+
+3. Kept 27 EU countries + euro area (20 countries) → 38,413 rows
+   Why: shows Ireland against its neighbours. The 20-country euro area
+   has the same members every month, so it's a fair average.
+
+4. Kept Jan 2019 – Dec 2025 → 9,408 rows
+   Why: same date range as the CSO data.
+
+5. Checked flags: only 8 values flagged "u" (Hungary and Portugal,
+   Food, Apr–Jun 2020/2021, during COVID lockdowns).
+   Decision: kept them (official, only 8, not Ireland), dropped the
+   flag column.
+
+6. Renamed columns to month, category_full, value (geo unchanged)
+   Why: same names as the CSO table so they can be joined.
+
+7. Changed month from text (2019-01) to a real date
+   Why: same date format as the CSO table.
+
+8. Added short category names and COICOP codes; renamed the euro
+   area to "Euro area"
+   Why: Eurostat only has long names, CSO has codes. Adding both
+   makes the two sources match. Long names don't fit on a chart.
+
+Final result: 9,408 rows, 5 columns, 0 missing values, 28 places.
+
+
+15 Nov 2026 – Yasashwi – Saving the clean data
+
+1. Sorted rows by country, category, month
+   Why: easier to check, and each country's line is in time order.
+
+2. Saved as data/clean_data.csv (no index column)
+   Why: this is the handover file for Priyanka's chart notebook.
+   It's small, so it goes on GitHub (raw files don't).
+
+3. Reloaded it to check: 9,408 rows, 6 columns.
+   Found that codes must be loaded as text, or 00/01/04 become 0/1/4.
+   Dates must also be parsed back into dates.
+   Added the correct loading line to the README for Priyanka.
