@@ -143,7 +143,7 @@ Final result: 9,408 rows, 5 columns, 0 missing values, 28 places.
    Why: this is the handover file for Priyanka's chart notebook.
    It's small, so it goes on GitHub (raw files don't).
 
-3. Reloaded it to check: 9,408 rows, 6 columns.
+3. Reloaded it to check: 9,408 rows, 5 columns.
    Found that codes must be loaded as text, or 00/01/04 become 0/1/4.
    Dates must also be parsed back into dates.
    Added the correct loading line to the README for Priyanka.

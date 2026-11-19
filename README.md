@@ -53,7 +53,7 @@ API link for eustat dataset: https://ec.europa.eu/eurostat/api/dissemination/sdm
 
 ## Clean data (data/clean_data.csv)
 Output of 1_data.ipynb, input of 2_chart.ipynb.
-9,408 rows × 6 columns · Jan 2019 – Dec 2025 · 28 places · 4 categories
+9,408 rows × 5 columns · Jan 2019 – Dec 2025 · 28 places · 4 categories
 
 | Column | Meaning |
 |---|---|
@@ -62,7 +62,6 @@ Output of 1_data.ipynb, input of 2_chart.ipynb.
 | `coicop_code` | 00 = All items, 01 = Food, 04 = Housing, ZZZ3 = Energy |
 | `category` | Short category name |
 | `value` | Annual rate of change (%) vs the same month a year earlier |
-| `source` | CSO (Ireland) or Eurostat (all others) |
 
 Load with:
 `pd.read_csv("data/clean_data.csv", parse_dates=["month"], dtype={"coicop_code": str})`

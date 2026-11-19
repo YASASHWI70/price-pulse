@@ -37,18 +37,17 @@ Each row answers: *"In this month, in this country, how much had prices of this 
 
 Example row:
 
-| month | geo | coicop_code | category | value | source |
-|---|---|---|---|---|---|
-| 2022-06-01 | Ireland | ZZZ3 | Energy | 54.1 | CSO |
+| month | geo | coicop_code | category | value |
+|---|---|---|---|---|
+| 2022-06-01 | Ireland | ZZZ3 | Energy | 54.1 |
 
-Read it as: **"In June 2022, energy prices in Ireland were 54.1% higher than in June 2021 (source: CSO)."**
+Read it as: **"In June 2022, energy prices in Ireland were 54.1% higher than in June 2021."**
 
 - **month:** the month (always shown as the 1st day of the month)
 - **geo:** the country, or "Euro area"
 - **coicop_code:** the official category code (00 All items, 01 Food, 04 Housing, ZZZ3 Energy)
 - **category:** the short category name, ready for chart labels
 - **value:** the % rise vs a year earlier (negative = prices fell)
-- **source:** CSO for Ireland, Eurostat for everyone else
 
 The file has 9,408 rows: 28 places × 4 categories × 84 months (Jan 2019 – Dec 2025).
 
@@ -179,8 +178,8 @@ Then:
 - Matched Ireland from CSO with Ireland from Eurostat on month, country, code and category: all 336 rows matched.
 - **316 of 336 values are identical. 20 differ by exactly 0.1, all in Energy.**
 - Likely reason: CSO's methodology note says its rates are calculated from index numbers rounded to one decimal place. Energy is a combined group, so rounding differences show up there. A 0.1 difference is too small to see on the chart, so the sources agree.
-- Combined the two: **Ireland from the CSO** (official national source) and **the other 26 countries + euro area from Eurostat**. Ireland was removed from the Eurostat table first so it isn't counted twice. A `source` column records where each row came from.
-- **Final table:** 9,408 rows × 6 columns (336 CSO + 9,072 Eurostat), 0 missing values, 0 duplicates, 28 places.
+- Combined the two: **Ireland from the CSO** (official national source) and **the other 26 countries + euro area from Eurostat**. Ireland was removed from the Eurostat table first so it isn't counted twice.
+- **Final table:** 9,408 rows × 5 columns (336 from CSO + 9,072 from Eurostat), 0 missing values, 0 duplicates, 28 places.
 
 ### Data reduction at a glance
 3,533,048 + 244,800 raw rows → 9,408 clean rows
@@ -195,7 +194,7 @@ Then:
 | All items, Dec 2025 | 2.7% | 2.0% |
 
 ### Output
-- `data/clean_data.csv`, 9,408 rows × 6 columns: month, geo, coicop_code, category, value, source.
+- `data/clean_data.csv`, 9,408 rows × 5 columns: month, geo, coicop_code, category, value.
 - Must be loaded with:
   `pd.read_csv("data/clean_data.csv", parse_dates=["month"], dtype={"coicop_code": str})`
   Without dtype, codes 00/01/04 turn into 0/1/4.
