@@ -147,3 +147,76 @@ Final result: 9,408 rows, 5 columns, 0 missing values, 28 places.
    Found that codes must be loaded as text, or 00/01/04 become 0/1/4.
    Dates must also be parsed back into dates.
    Added the correct loading line to the README for Priyanka.
+
+
+19 Nov 2026 – Priyanka – Setup and planning
+
+What I did: Cloned the repo with GitHub Desktop and installed pandas
+and Plotly. Read the brief, FAQ and sample report, and planned the
+chart steps.
+Why: To start the chart notebook (2_chart.ipynb) from Yasashwi's
+clean data file.
+
+
+20 Nov 2026 – Priyanka – Loading the data and exploring it
+
+1. Loaded data/clean_data.csv → 9,408 rows, 5 columns
+   Why: This is the handover file from the data notebook.
+
+2. Exploratory chart 1: Ireland vs Euro area, All items
+   Why: To see the overall story first.
+   Found: Ireland peaked at 9.6% (June–July 2022), a little below the
+   Euro area at 10.6% (October 2022). Overall, Ireland did not rise faster.
+
+3. Exploratory chart 2: average gap (Ireland minus Euro area), 2022–2023
+   Why: To see which categories rose faster in Ireland.
+   Found: Housing +8.1, Energy +6.0, All items -0.3, Food -2.8.
+   Decision: Each category tells a different story, so the final chart
+   needs a button for each category.
+
+
+25 Nov 2026 – Priyanka – Building the final chart
+
+1. First idea: one grey line for each of the other EU countries
+   Problem: Too crowded, and a few extreme countries (up to +114%)
+   stretched the chart and hid the Ireland gap.
+   Decision: Use one grey area instead, showing where most other EU
+   countries were (the middle half each month).
+
+2. Built the chart for one category (Housing) to test it
+   Why: To check the grey area and lines worked before doing all 4.
+
+3. Added all 4 categories with a button for each
+   Why: Lets the reader switch categories. The title changes to say
+   what each view shows.
+
+
+26 Nov 2026 – Priyanka – Styling the chart
+
+1. Shaded 2022–2023 in light yellow and labelled it "Cost-of-living crisis"
+   Why: Shows the crisis period at a glance.
+
+2. Added a line at 0%
+   Why: Shows when prices were falling.
+
+3. Hover shows the month and the Ireland and Eurozone values
+   Why: Readers can check exact numbers.
+
+4. Moved the legend under the chart and added a source note
+   Why: Keeps the top clean and shows where the data comes from.
+
+5. Tried a hint text and gridlines, then removed them
+   Why: They made the chart look cluttered.
+
+
+27 Nov 2026 – Priyanka – Making the chart easy to understand
+
+1. Removed Ireland from the grey area
+   Why: The question compares Ireland with the rest of Europe, so the
+   grey area now uses only the other 26 EU countries.
+
+2. Tested one grey line per country against the grey area again.
+   Decision: Kept the grey area, because the lines looked too cluttered.
+
+3. Saved the chart as price_chart.html and tested it offline
+   Result: All 4 buttons and hover work.
